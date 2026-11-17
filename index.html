@@ -6,181 +6,216 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>আরিশা অনলাইন শপ</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#fff8fb;color:#29202a}
-header{background:linear-gradient(120deg,#b51765,#ed5794);color:white;padding:22px 15px;text-align:center}
-header h1{margin:5px;font-size:27px}
-header p{margin:5px}
-nav{background:white;padding:13px;text-align:center;position:sticky;top:0;z-index:5;box-shadow:0 2px 8px #ddd}
-nav a{color:#b51765;text-decoration:none;font-weight:bold;margin:0 10px}
-.hero{padding:35px 18px;text-align:center;background:#ffe1ee}
-.hero h2{color:#a31358;font-size:27px}
-.hero button,.order-btn{background:#c21b69;color:white;border:0;padding:12px 22px;border-radius:25px;font-size:16px;cursor:pointer}
-.container{padding:18px;max-width:1100px;margin:auto}
-.search{width:100%;padding:13px;border:1px solid #ddd;border-radius:10px;font-size:16px;margin:12px 0}
-.products{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-.product{background:white;border-radius:13px;overflow:hidden;box-shadow:0 2px 9px #ead5df}
-.product img{width:100%;height:145px;object-fit:cover;background:#f5e3ec}
-.product-info{padding:12px}
-.product h3{font-size:16px;margin:4px 0}
-.price{color:#c21b69;font-weight:bold;font-size:18px}
-.product button{width:100%;margin-top:8px;background:#c21b69;color:white;border:0;padding:10px;border-radius:8px}
-h2.section{color:#ad175e}
-.cart{background:white;padding:16px;border-radius:12px;margin-top:22px}
-.cart-item{display:flex;justify-content:space-between;gap:8px;padding:9px 0;border-bottom:1px solid #eee}
-input,select,textarea{width:100%;padding:12px;margin:7px 0;border:1px solid #ddd;border-radius:8px;font-size:15px}
-.checkout{background:#fff0f6;padding:16px;border-radius:12px;margin-top:15px}
-.checkout button{width:100%;padding:14px;background:#168c4b;color:white;border:0;border-radius:9px;font-size:16px;margin-top:12px}
-footer{background:#42152f;color:white;text-align:center;padding:25px;margin-top:30px}
-footer a{color:white}
-@media(min-width:650px){.products{grid-template-columns:repeat(4,1fr)}}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#fff8fb;color:#302334}
+header{background:linear-gradient(120deg,#701b56,#c34c91);color:white;text-align:center;padding:25px 12px}
+header h1{font-size:28px}
+header p{margin-top:8px}
+nav{background:white;padding:14px 5px;display:flex;justify-content:center;gap:18px;flex-wrap:wrap;box-shadow:0 2px 8px #ddd}
+nav a{text-decoration:none;color:#85235f;font-weight:bold;font-size:14px}
+.hero{padding:55px 18px;text-align:center;background:linear-gradient(135deg,#ffe0ef,#f6e5ff)}
+.hero h2{font-size:29px;color:#8b225f;margin-bottom:13px}
+.hero p{margin-bottom:20px;line-height:1.7}
+.btn{background:#9d276d;color:white;border:0;border-radius:25px;padding:13px 23px;font-weight:bold;cursor:pointer}
+.section{padding:30px 15px}
+.section h2{text-align:center;color:#8e2866;margin-bottom:23px}
+.search{display:block;width:90%;max-width:520px;margin:22px auto;padding:14px;border:1px solid #e6c3d8;border-radius:25px;font-size:16px}
+.categories{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin-bottom:22px}
+.categories button{border:0;background:#f5ddeb;color:#81265f;padding:10px 15px;border-radius:22px;cursor:pointer}
+.products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;max-width:950px;margin:auto}
+.product{background:white;border-radius:17px;overflow:hidden;text-align:center;box-shadow:0 4px 15px #00000012;padding-bottom:15px}
+.product img{width:100%;height:145px;object-fit:cover;background:#f5e5ef}
+.product h3{font-size:15px;margin:12px 4px}
+.price{color:#a12670;font-weight:bold;margin:9px}
+.product button{padding:10px 15px;font-size:13px}
+.panel{max-width:600px;margin:15px auto;background:white;padding:20px;border-radius:17px;box-shadow:0 4px 15px #00000012}
+.panel input,.panel textarea{width:100%;padding:13px;margin:9px 0;border:1px solid #e4c8d8;border-radius:10px;font-size:15px}
+.cart-item{display:flex;justify-content:space-between;gap:8px;padding:12px 0;border-bottom:1px solid #eee}
+footer{background:#651c4c;color:white;text-align:center;padding:28px 12px;margin-top:30px}
+footer p{margin-top:10px}
+.whatsapp{background:#168b50;margin-top:15px}
+.note{text-align:center;color:#777;font-size:13px;margin-top:12px;line-height:1.6}
+@media(min-width:650px){
+.products{grid-template-columns:repeat(3,1fr)}
+.product img{height:190px}
+}
+@media(max-width:350px){header h1{font-size:23px}.hero h2{font-size:24px}}
 </style>
 </head>
 <body>
 
 <header>
 <h1>🌸 আরিশা অনলাইন শপ 🌸</h1>
-<p>আপনার পছন্দের সব পণ্য, এখন এক জায়গায়</p>
+<p>আপনার পছন্দের কেনাকাটার বিশ্বস্ত ঠিকানা</p>
 </header>
 
 <nav>
 <a href="#home">হোম</a>
-<a href="#products">পণ্য</a>
-<a href="#cart">কার্ট 🛒</a>
+<a href="#products">পণ্যসমূহ</a>
+<a href="#cart">🛒 কার্ট</a>
+<a href="#order">অর্ডার</a>
 <a href="#contact">যোগাযোগ</a>
 </nav>
 
 <section class="hero" id="home">
-<h2>স্বাগতম আরিশা অনলাইন শপে</h2>
-<p>সাশ্রয়ী দামে পছন্দের পণ্য কিনুন ঘরে বসেই।</p>
-<button onclick="document.getElementById('products').scrollIntoView()">এখনই কেনাকাটা করুন</button>
+<h2>স্বাগতম আরিশা অনলাইন শপে ❤️</h2>
+<p>সুন্দর পণ্য, আকর্ষণীয় দাম এবং সহজ কেনাকাটা।<br>আপনার পছন্দের পণ্যটি অর্ডার করুন আজই!</p>
+<button class="btn" onclick="go('products')">এখনই কেনাকাটা করুন</button>
 </section>
 
-<div class="container">
-<h2 class="section" id="products">🛍️ আমাদের পণ্যসমূহ</h2>
-<input class="search" id="search" placeholder="আপনার পছন্দের পণ্য খুঁজুন..." oninput="showProducts()">
+<input class="search" id="search" placeholder="🔍 পণ্যের নাম লিখে খুঁজুন..." oninput="showProducts()">
+
+<section class="section" id="products">
+<h2>✨ আমাদের কালেকশন ✨</h2>
+<div class="categories">
+<button onclick="setCat('সব')">সব পণ্য</button>
+<button onclick="setCat('ফ্যাশন')">ফ্যাশন</button>
+<button onclick="setCat('সৌন্দর্য')">সৌন্দর্য</button>
+<button onclick="setCat('অন্যান্য')">অন্যান্য</button>
+</div>
 <div class="products" id="productList"></div>
-
-<div class="cart" id="cart">
-<h2>🛒 আপনার শপিং কার্ট</h2>
-<div id="cartItems">এখনো কোনো পণ্য যোগ করেননি।</div>
-<h3>মোট মূল্য: ৳<span id="total">0</span></h3>
-
-<div class="checkout">
-<h2>📦 অর্ডার সম্পন্ন করুন</h2>
-<input id="customer" placeholder="আপনার নাম লিখুন">
-<input id="phone" type="tel" placeholder="মোবাইল নম্বর লিখুন">
-<textarea id="address" placeholder="সম্পূর্ণ ঠিকানা লিখুন"></textarea>
-
-<label>পেমেন্ট পদ্ধতি নির্বাচন করুন</label>
-<select id="payment">
-<option value="ক্যাশ অন ডেলিভারি">ক্যাশ অন ডেলিভারি</option>
-<option value="বিকাশ">বিকাশ</option>
-<option value="নগদ">নগদ</option>
-</select>
-
-<p>বিকাশ ও নগদ পার্সোনাল নম্বর: <b>01837700309</b></p>
-<p>বিকাশ/নগদে টাকা পাঠানোর আগে অর্ডার নিশ্চিত করুন।</p>
-
-<button onclick="placeOrder()">WhatsApp-এ অর্ডার করুন</button>
-</div>
-</div>
-
-<section id="contact">
-<h2 class="section">📞 যোগাযোগ করুন</h2>
-<p>WhatsApp: 01704212376</p>
-<p>বিকাশ ও নগদ: 01837700309</p>
 </section>
+
+<section class="section" id="cart">
+<h2>🛍️ আপনার শপিং কার্ট</h2>
+<div class="panel">
+<div id="cartItems">আপনার কার্ট এখন খালি।</div>
+<h3 style="margin-top:18px">সর্বমোট: ৳ <span id="total">0</span></h3>
 </div>
+</section>
+
+<section class="section" id="order">
+<h2>📦 অর্ডার সম্পন্ন করুন</h2>
+<div class="panel">
+<input id="customer" placeholder="আপনার সম্পূর্ণ নাম">
+<input id="phone" type="tel" placeholder="আপনার মোবাইল নম্বর">
+<textarea id="address" rows="3" placeholder="আপনার সম্পূর্ণ ঠিকানা"></textarea>
+
+<p style="font-weight:bold;margin:12px 0">💵 পেমেন্ট পদ্ধতি</p>
+<div style="background:#f8eaf2;padding:15px;border-radius:10px;color:#792052">
+<strong>ক্যাশ অন ডেলিভারি</strong>
+<p style="font-size:13px;margin-top:6px">পণ্য হাতে পাওয়ার পর ডেলিভারি কর্মীকে টাকা পরিশোধ করুন।</p>
+</div>
+
+<button class="btn" style="width:100%;margin-top:18px" onclick="orderNow()">অর্ডার নিশ্চিত করুন</button>
+<p class="note">আপনার অর্ডার WhatsApp-এর মাধ্যমে আমাদের কাছে পাঠানো হবে।</p>
+</div>
+</section>
+
+<section class="section" id="contact">
+<h2>💗 যোগাযোগ করুন</h2>
+<div class="panel" style="text-align:center">
+<p>আমাদের সঙ্গে কথা বলতে নিচের বাটনে ক্লিক করুন।</p>
+<button class="btn whatsapp" onclick="contactUs()">WhatsApp-এ যোগাযোগ করুন</button>
+</div>
+</section>
 
 <footer>
 <h3>🌸 আরিশা অনলাইন শপ 🌸</h3>
-<p>আপনার কেনাকাটার বিশ্বস্ত ঠিকানা</p>
-<p>সকল স্বত্ব সংরক্ষিত © 2026</p>
+<p>আপনার ভালোবাসাই আমাদের অনুপ্রেরণা।</p>
+<p>ধন্যবাদ আমাদের সঙ্গে থাকার জন্য ❤️</p>
 </footer>
 
 <script>
-const products=[
-{name:"সুন্দর ড্রেস",price:850,img:"https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=500"},
-{name:"লেডিস ব্যাগ",price:650,img:"https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=500"},
-{name:"হাতঘড়ি",price:550,img:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500"},
-{name:"সানগ্লাস",price:350,img:"https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=500"},
-{name:"জুতা",price:750,img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500"},
-{name:"কসমেটিকস",price:450,img:"https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500"},
-{name:"পারফিউম",price:600,img:"https://images.unsplash.com/photo-1541643600914-78b084683601?w=500"},
-{name:"গয়না",price:400,img:"https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=500"}
+// WhatsApp যোগাযোগ নম্বর
+// ওয়েবপেজে নম্বর লেখা থাকবে না, তবে সোর্স কোডে পাওয়া সম্ভব।
+const WHATSAPP = "8801704212376";
+
+// নমুনা পণ্য। এখানে নিজের পণ্যের নাম, দাম ও ছবির লিংক দিন।
+const products = [
+ {name:"ফ্যাশন কালেকশন",price:550,cat:"ফ্যাশন",img:"https://placehold.co/500x350/f6d9e9/86235e?text=Fashion"},
+ {name:"বিউটি কালেকশন",price:350,cat:"সৌন্দর্য",img:"https://placehold.co/500x350/f6d9e9/86235e?text=Beauty"},
+ {name:"স্টাইলিশ কালেকশন",price:650,cat:"ফ্যাশন",img:"https://placehold.co/500x350/f6d9e9/86235e?text=Style"},
+ {name:"বিশেষ কালেকশন",price:450,cat:"অন্যান্য",img:"https://placehold.co/500x350/f6d9e9/86235e?text=Special"}
 ];
 
 let cart=[];
+let selected="সব";
+
+function go(id){
+ document.getElementById(id).scrollIntoView({behavior:"smooth"});
+}
+
+function setCat(c){
+ selected=c;
+ showProducts();
+}
 
 function showProducts(){
-let q=document.getElementById("search").value.toLowerCase();
-document.getElementById("productList").innerHTML=products
-.map((p,i)=>({p,i}))
-.filter(x=>x.p.name.toLowerCase().includes(q))
-.map(x=>`
-<div class="product">
-<img src="${x.p.img}" alt="${x.p.name}">
-<div class="product-info">
-<h3>${x.p.name}</h3>
-<div class="price">৳${x.p.price}</div>
-<button onclick="addCart(${x.i})">কার্টে যোগ করুন</button>
-</div>
-</div>`).join("");
+ const q=document.getElementById("search").value.toLowerCase();
+ const list=document.getElementById("productList");
+ list.innerHTML="";
+ products.forEach((p,i)=>{
+  if((selected==="সব"||p.cat===selected)&&p.name.toLowerCase().includes(q)){
+   list.innerHTML+=`
+   <div class="product">
+    <img src="${p.img}" alt="${p.name}">
+    <h3>${p.name}</h3>
+    <div class="price">৳ ${p.price}</div>
+    <button class="btn" onclick="addCart(${i})">কার্টে যোগ করুন</button>
+   </div>`;
+  }
+ });
+ if(!list.innerHTML)list.innerHTML="কোনো পণ্য পাওয়া যায়নি।";
 }
 
 function addCart(i){
-cart.push(i);
-showCart();
-alert("পণ্যটি কার্টে যোগ হয়েছে!");
+ cart.push(products[i]);
+ showCart();
+ alert("পণ্যটি কার্টে যোগ হয়েছে!");
+}
+
+function removeCart(i){
+ cart.splice(i,1);
+ showCart();
 }
 
 function showCart(){
-let total=0;
-let html="";
-cart.forEach((i,n)=>{
-total+=products[i].price;
-html+=`<div class="cart-item">
-<span>${products[i].name} - ৳${products[i].price}</span>
-<button onclick="removeCart(${n})">❌</button>
-</div>`;
-});
-document.getElementById("cartItems").innerHTML=html||"এখনো কোনো পণ্য যোগ করেননি।";
-document.getElementById("total").innerText=total;
+ let html="";
+ let total=0;
+ cart.forEach((p,i)=>{
+  total+=p.price;
+  html+=`<div class="cart-item">
+   <span>${p.name} - ৳${p.price}</span>
+   <button onclick="removeCart(${i})">❌</button>
+  </div>`;
+ });
+ document.getElementById("cartItems").innerHTML=html||"আপনার কার্ট এখন খালি।";
+ document.getElementById("total").innerText=total;
 }
 
-function removeCart(n){
-cart.splice(n,1);
-showCart();
+function contactUs(){
+ const msg="আসসালামু আলাইকুম, আরিশা অনলাইন শপ সম্পর্কে জানতে চাই।";
+ window.open("https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(msg),"_blank");
 }
 
-function placeOrder(){
-let name=document.getElementById("customer").value.trim();
-let phone=document.getElementById("phone").value.trim();
-let address=document.getElementById("address").value.trim();
-let payment=document.getElementById("payment").value;
+function orderNow(){
+ const name=document.getElementById("customer").value.trim();
+ const phone=document.getElementById("phone").value.trim();
+ const address=document.getElementById("address").value.trim();
 
-if(cart.length===0){
-alert("প্রথমে কার্টে পণ্য যোগ করুন।");
-return;
-}
-if(!name||!phone||!address){
-alert("আপনার নাম, মোবাইল নম্বর ও ঠিকানা লিখুন।");
-return;
-}
+ if(!name||!phone||!address){
+  alert("অনুগ্রহ করে নাম, মোবাইল নম্বর ও ঠিকানা পূরণ করুন।");
+  return;
+ }
+ if(cart.length===0){
+  alert("প্রথমে কার্টে পণ্য যোগ করুন।");
+  return;
+ }
 
-let total=cart.reduce((sum,i)=>sum+products[i].price,0);
-let items=cart.map(i=>products[i].name+" - ৳"+products[i].price).join("%0A");
+ const items=cart.map(p=>p.name+" - ৳"+p.price).join("\n");
+ const total=cart.reduce((s,p)=>s+p.price,0);
 
-let message="নতুন অর্ডার - আরিশা অনলাইন শপ%0A"+
-"নাম: "+encodeURIComponent(name)+"%0A"+
-"মোবাইল: "+encodeURIComponent(phone)+"%0A"+
-"ঠিকানা: "+encodeURIComponent(address)+"%0A"+
-"পণ্যসমূহ:%0A"+items+"%0A"+
-"মোট: ৳"+total+"%0A"+
-"পেমেন্ট: "+encodeURIComponent(payment);
+ const msg=
+ "🌸 নতুন অর্ডার - আরিশা অনলাইন শপ\n\n"+
+ "নাম: "+name+"\n"+
+ "মোবাইল: "+phone+"\n"+
+ "ঠিকানা: "+address+"\n\n"+
+ "পণ্যসমূহ:\n"+items+"\n\n"+
+ "মোট মূল্য: ৳"+total+"\n"+
+ "পেমেন্ট: ক্যাশ অন ডেলিভারি";
 
-window.open("https://wa.me/8801704212376?text="+message,"_blank");
+ window.open("https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(msg),"_blank");
 }
 
 showProducts();
