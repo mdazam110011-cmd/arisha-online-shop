@@ -5,221 +5,345 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>আরিশা অনলাইন শপ</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Arial,sans-serif;background:#fff8fb;color:#302334}
-header{background:linear-gradient(120deg,#701b56,#c34c91);color:white;text-align:center;padding:25px 12px}
-header h1{font-size:28px}
-header p{margin-top:8px}
-nav{background:white;padding:14px 5px;display:flex;justify-content:center;gap:18px;flex-wrap:wrap;box-shadow:0 2px 8px #ddd}
-nav a{text-decoration:none;color:#85235f;font-weight:bold;font-size:14px}
-.hero{padding:55px 18px;text-align:center;background:linear-gradient(135deg,#ffe0ef,#f6e5ff)}
-.hero h2{font-size:29px;color:#8b225f;margin-bottom:13px}
-.hero p{margin-bottom:20px;line-height:1.7}
-.btn{background:#9d276d;color:white;border:0;border-radius:25px;padding:13px 23px;font-weight:bold;cursor:pointer}
-.section{padding:30px 15px}
-.section h2{text-align:center;color:#8e2866;margin-bottom:23px}
-.search{display:block;width:90%;max-width:520px;margin:22px auto;padding:14px;border:1px solid #e6c3d8;border-radius:25px;font-size:16px}
-.categories{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin-bottom:22px}
-.categories button{border:0;background:#f5ddeb;color:#81265f;padding:10px 15px;border-radius:22px;cursor:pointer}
-.products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;max-width:950px;margin:auto}
-.product{background:white;border-radius:17px;overflow:hidden;text-align:center;box-shadow:0 4px 15px #00000012;padding-bottom:15px}
-.product img{width:100%;height:145px;object-fit:cover;background:#f5e5ef}
-.product h3{font-size:15px;margin:12px 4px}
-.price{color:#a12670;font-weight:bold;margin:9px}
-.product button{padding:10px 15px;font-size:13px}
-.panel{max-width:600px;margin:15px auto;background:white;padding:20px;border-radius:17px;box-shadow:0 4px 15px #00000012}
-.panel input,.panel textarea{width:100%;padding:13px;margin:9px 0;border:1px solid #e4c8d8;border-radius:10px;font-size:15px}
-.cart-item{display:flex;justify-content:space-between;gap:8px;padding:12px 0;border-bottom:1px solid #eee}
-footer{background:#651c4c;color:white;text-align:center;padding:28px 12px;margin-top:30px}
-footer p{margin-top:10px}
-.whatsapp{background:#168b50;margin-top:15px}
-.note{text-align:center;color:#777;font-size:13px;margin-top:12px;line-height:1.6}
-@media(min-width:650px){
-.products{grid-template-columns:repeat(3,1fr)}
-.product img{height:190px}
-}
-@media(max-width:350px){header h1{font-size:23px}.hero h2{font-size:24px}}
+:root{--pink:#e84393;--purple:#7541a8;--bg:#fff7fb;--ink:#302438}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,"Noto Sans Bengali",sans-serif;background:var(--bg);color:var(--ink)}
+header{background:linear-gradient(120deg,#e84393,#7541a8);color:white;padding:22px 15px;text-align:center}
+header h1{margin:0;font-size:27px}
+header p{margin:8px 0 0}
+nav{display:flex;justify-content:center;gap:15px;flex-wrap:wrap;padding:13px;background:white;position:sticky;top:0;z-index:5;box-shadow:0 2px 8px #0001}
+nav a{color:var(--purple);text-decoration:none;font-weight:bold}
+.container{max-width:1100px;margin:auto;padding:18px}
+.hero{background:linear-gradient(120deg,#ffe0ef,#eee0ff);padding:28px;border-radius:18px;text-align:center;margin-bottom:20px}
+.hero h2{color:#9b2670}
+input,textarea,select,button{font:inherit}
+input,textarea,select{width:100%;padding:12px;border:1px solid #e5cddd;border-radius:10px;margin:6px 0 12px;background:white}
+button{border:0;border-radius:10px;padding:11px 16px;background:var(--pink);color:white;font-weight:bold;cursor:pointer}
+button.secondary{background:var(--purple)}
+button.danger{background:#c0395a}
+button:disabled{opacity:.5}
+.section-title{color:var(--purple);margin:25px 0 12px}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:15px}
+.card{background:white;border-radius:15px;padding:12px;box-shadow:0 3px 12px #0000000c}
+.card img{width:100%;height:155px;object-fit:cover;border-radius:11px;background:#f5eaf1}
+.card h3{font-size:17px;margin:10px 0 5px}
+.price{color:#d62f83;font-weight:bold;font-size:18px}
+.muted{color:#766b78;font-size:13px}
+.panel{background:white;border-radius:15px;padding:17px;margin:15px 0;box-shadow:0 3px 12px #0000000c}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row>*{flex:1;min-width:130px}
+.hidden{display:none!important}
+.cart-item{border-bottom:1px solid #eee;padding:10px 0}
+.status{font-weight:bold;color:var(--purple)}
+table{width:100%;border-collapse:collapse;min-width:600px}
+th,td{padding:10px;border-bottom:1px solid #eee;text-align:left;vertical-align:top}
+.table-wrap{overflow-x:auto}
+footer{text-align:center;background:#392441;color:white;padding:22px;margin-top:30px}
+.small{font-size:12px}
 </style>
 </head>
 <body>
-
 <header>
 <h1>🌸 আরিশা অনলাইন শপ 🌸</h1>
-<p>আপনার পছন্দের কেনাকাটার বিশ্বস্ত ঠিকানা</p>
+<p>আপনার পছন্দের পণ্য, আপনার হাতের নাগালে</p>
 </header>
 
 <nav>
 <a href="#home">হোম</a>
 <a href="#products">পণ্যসমূহ</a>
-<a href="#cart">🛒 কার্ট</a>
-<a href="#order">অর্ডার</a>
-<a href="#contact">যোগাযোগ</a>
+<a href="#cart">কার্ট</a>
+<a href="#admin">অ্যাডমিন</a>
 </nav>
 
-<section class="hero" id="home">
-<h2>স্বাগতম আরিশা অনলাইন শপে ❤️</h2>
-<p>সুন্দর পণ্য, আকর্ষণীয় দাম এবং সহজ কেনাকাটা।<br>আপনার পছন্দের পণ্যটি অর্ডার করুন আজই!</p>
-<button class="btn" onclick="go('products')">এখনই কেনাকাটা করুন</button>
+<main class="container">
+<section id="home" class="hero">
+<h2>স্বাগতম আরিশা অনলাইন শপে</h2>
+<p>বিশ্বস্ত কেনাকাটা, সহজ অর্ডার এবং ক্যাশ অন ডেলিভারি।</p>
+<button onclick="document.getElementById('products').scrollIntoView()">কেনাকাটা শুরু করুন</button>
 </section>
 
-<input class="search" id="search" placeholder="🔍 পণ্যের নাম লিখে খুঁজুন..." oninput="showProducts()">
-
-<section class="section" id="products">
-<h2>✨ আমাদের কালেকশন ✨</h2>
-<div class="categories">
-<button onclick="setCat('সব')">সব পণ্য</button>
-<button onclick="setCat('ফ্যাশন')">ফ্যাশন</button>
-<button onclick="setCat('সৌন্দর্য')">সৌন্দর্য</button>
-<button onclick="setCat('অন্যান্য')">অন্যান্য</button>
-</div>
-<div class="products" id="productList"></div>
+<section id="products">
+<h2 class="section-title">🛍️ আমাদের পণ্যসমূহ</h2>
+<input id="search" placeholder="পণ্যের নাম লিখে খুঁজুন..." oninput="renderProducts()">
+<select id="category" onchange="renderProducts()">
+<option value="">সব ক্যাটাগরি</option>
+<option>ফ্যাশন</option><option>বিউটি</option><option>লাইফস্টাইল</option><option>অন্যান্য</option>
+</select>
+<div id="productList" class="products">পণ্য লোড হচ্ছে...</div>
 </section>
 
-<section class="section" id="cart">
-<h2>🛍️ আপনার শপিং কার্ট</h2>
+<section id="cart">
+<h2 class="section-title">🛒 আপনার শপিং কার্ট</h2>
 <div class="panel">
-<div id="cartItems">আপনার কার্ট এখন খালি।</div>
-<h3 style="margin-top:18px">সর্বমোট: ৳ <span id="total">0</span></h3>
+<div id="cartItems">আপনার কার্ট খালি।</div>
+<h3>মোট: ৳<span id="cartTotal">0</span></h3>
 </div>
-</section>
-
-<section class="section" id="order">
-<h2>📦 অর্ডার সম্পন্ন করুন</h2>
 <div class="panel">
-<input id="customer" placeholder="আপনার সম্পূর্ণ নাম">
-<input id="phone" type="tel" placeholder="আপনার মোবাইল নম্বর">
-<textarea id="address" rows="3" placeholder="আপনার সম্পূর্ণ ঠিকানা"></textarea>
-
-<p style="font-weight:bold;margin:12px 0">💵 পেমেন্ট পদ্ধতি</p>
-<div style="background:#f8eaf2;padding:15px;border-radius:10px;color:#792052">
-<strong>ক্যাশ অন ডেলিভারি</strong>
-<p style="font-size:13px;margin-top:6px">পণ্য হাতে পাওয়ার পর ডেলিভারি কর্মীকে টাকা পরিশোধ করুন।</p>
-</div>
-
-<button class="btn" style="width:100%;margin-top:18px" onclick="orderNow()">অর্ডার নিশ্চিত করুন</button>
-<p class="note">আপনার অর্ডার WhatsApp-এর মাধ্যমে আমাদের কাছে পাঠানো হবে।</p>
+<h3>অর্ডার সম্পন্ন করুন</h3>
+<label>আপনার নাম</label>
+<input id="customerName" placeholder="সম্পূর্ণ নাম">
+<label>মোবাইল নম্বর</label>
+<input id="customerPhone" type="tel" placeholder="01XXXXXXXXX">
+<label>সম্পূর্ণ ঠিকানা</label>
+<textarea id="customerAddress" rows="3" placeholder="বাসা, এলাকা, উপজেলা, জেলা"></textarea>
+<p><b>পেমেন্ট পদ্ধতি:</b> ক্যাশ অন ডেলিভারি</p>
+<button onclick="placeOrder()">অর্ডার নিশ্চিত করুন</button>
+<p id="orderMessage" aria-live="polite"></p>
 </div>
 </section>
 
-<section class="section" id="contact">
-<h2>💗 যোগাযোগ করুন</h2>
-<div class="panel" style="text-align:center">
-<p>আমাদের সঙ্গে কথা বলতে নিচের বাটনে ক্লিক করুন।</p>
-<button class="btn whatsapp" onclick="contactUs()">WhatsApp-এ যোগাযোগ করুন</button>
+<section id="admin">
+<h2 class="section-title">🔐 অ্যাডমিন প্যানেল</h2>
+<div class="panel" id="loginPanel">
+<p>শুধুমাত্র অনুমোদিত অ্যাডমিন লগইন করতে পারবেন।</p>
+<input id="adminEmail" type="email" placeholder="অ্যাডমিন ইমেইল">
+<input id="adminPassword" type="password" placeholder="পাসওয়ার্ড">
+<button onclick="adminLogin()">লগইন</button>
+<p id="loginMessage"></p>
+</div>
+
+<div id="dashboard" class="hidden">
+<div class="panel">
+<div class="row">
+<div><b>মোট অর্ডার</b><h2 id="orderCount">0</h2></div>
+<div><b>মোট বিক্রি</b><h2>৳<span id="salesTotal">0</span></h2></div>
+</div>
+<button class="secondary" onclick="loadDashboard()">রিফ্রেশ</button>
+<button class="danger" onclick="adminLogout()">লগআউট</button>
+</div>
+
+<div class="panel">
+<h3>📦 অর্ডার ব্যবস্থাপনা</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>অর্ডার</th><th>গ্রাহক</th><th>পণ্য</th><th>মোট</th><th>স্ট্যাটাস</th></tr></thead>
+<tbody id="ordersTable"></tbody>
+</table>
+</div>
+</div>
+
+<div class="panel">
+<h3>➕ নতুন পণ্য যোগ / সম্পাদনা</h3>
+<input type="hidden" id="editProductId">
+<label>পণ্যের নাম</label><input id="pName" placeholder="পণ্যের নাম">
+<label>বিবরণ</label><textarea id="pDescription" placeholder="পণ্যের বিবরণ"></textarea>
+<div class="row">
+<div><label>দাম (টাকা)</label><input id="pPrice" type="number" min="0" placeholder="দাম"></div>
+<div><label>স্টক</label><input id="pStock" type="number" min="0" placeholder="স্টক"></div>
+</div>
+<label>ছবির URL</label><input id="pImage" placeholder="https://example.com/image.jpg">
+<label>ক্যাটাগরি</label>
+<select id="pCategory"><option>ফ্যাশন</option><option>বিউটি</option><option>লাইফস্টাইল</option><option>অন্যান্য</option></select>
+<button onclick="saveProduct()">পণ্য সংরক্ষণ করুন</button>
+<button class="secondary" onclick="clearProductForm()">নতুন পণ্য</button>
+<p id="productMessage"></p>
+</div>
+
+<div class="panel">
+<h3>🧾 পণ্য তালিকা</h3>
+<div class="table-wrap">
+<table><thead><tr><th>নাম</th><th>দাম</th><th>স্টক</th><th>কাজ</th></tr></thead>
+<tbody id="adminProducts"></tbody></table>
+</div>
+</div>
 </div>
 </section>
+</main>
 
 <footer>
-<h3>🌸 আরিশা অনলাইন শপ 🌸</h3>
-<p>আপনার ভালোবাসাই আমাদের অনুপ্রেরণা।</p>
-<p>ধন্যবাদ আমাদের সঙ্গে থাকার জন্য ❤️</p>
+<h3>আরিশা অনলাইন শপ</h3>
+<p>আপনার আস্থার অনলাইন শপ ❤️</p>
+<p class="small">© 2026 Arisha Online Shop</p>
 </footer>
 
 <script>
-// WhatsApp যোগাযোগ নম্বর
-// ওয়েবপেজে নম্বর লেখা থাকবে না, তবে সোর্স কোডে পাওয়া সম্ভব।
-const WHATSAPP = "8801704212376";
+const SUPABASE_URL = "https://wsldklyutrszfzqqqenw.supabase.co";
+const SUPABASE_KEY = "sb_publishable_9iA66WD0w0IZzdRp-rTdiw_dlBagcAL";
+const ADMIN_EMAIL = "mdazam110011@gmail.com";
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// নমুনা পণ্য। এখানে নিজের পণ্যের নাম, দাম ও ছবির লিংক দিন।
-const products = [
- {name:"ফ্যাশন কালেকশন",price:550,cat:"ফ্যাশন",img:"https://placehold.co/500x350/f6d9e9/86235e?text=Fashion"},
- {name:"বিউটি কালেকশন",price:350,cat:"সৌন্দর্য",img:"https://placehold.co/500x350/f6d9e9/86235e?text=Beauty"},
- {name:"স্টাইলিশ কালেকশন",price:650,cat:"ফ্যাশন",img:"https://placehold.co/500x350/f6d9e9/86235e?text=Style"},
- {name:"বিশেষ কালেকশন",price:450,cat:"অন্যান্য",img:"https://placehold.co/500x350/f6d9e9/86235e?text=Special"}
-];
+let products = [];
+let cart = [];
+let isAdmin = false;
 
-let cart=[];
-let selected="সব";
+function money(n){return Number(n||0).toLocaleString("en-BD")}
+function safe(value){return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 
-function go(id){
- document.getElementById(id).scrollIntoView({behavior:"smooth"});
+async function loadProducts(){
+ const {data,error}=await db.from("products").select("*").order("created_at",{ascending:false});
+ if(error){document.getElementById("productList").textContent="পণ্য লোড করা যায়নি। Supabase সেটিং পরীক্ষা করুন।";return}
+ products=data||[];
+ renderProducts();
+ if(isAdmin) renderAdminProducts();
 }
 
-function setCat(c){
- selected=c;
- showProducts();
-}
-
-function showProducts(){
+function renderProducts(){
  const q=document.getElementById("search").value.toLowerCase();
- const list=document.getElementById("productList");
- list.innerHTML="";
- products.forEach((p,i)=>{
-  if((selected==="সব"||p.cat===selected)&&p.name.toLowerCase().includes(q)){
-   list.innerHTML+=`
-   <div class="product">
-    <img src="${p.img}" alt="${p.name}">
-    <h3>${p.name}</h3>
-    <div class="price">৳ ${p.price}</div>
-    <button class="btn" onclick="addCart(${i})">কার্টে যোগ করুন</button>
-   </div>`;
-  }
- });
- if(!list.innerHTML)list.innerHTML="কোনো পণ্য পাওয়া যায়নি।";
+ const cat=document.getElementById("category").value;
+ const list=products.filter(p=>(p.name||"").toLowerCase().includes(q)&&(!cat||p.category===cat));
+ document.getElementById("productList").innerHTML=list.length?list.map(p=>`
+ <article class="card">
+ <img src="${safe(p.image_url||"https://placehold.co/400x300?text=Product")}" alt="${safe(p.name)}" onerror="this.src='https://placehold.co/400x300?text=Product'">
+ <h3>${safe(p.name)}</h3>
+ <p class="muted">${safe(p.description||"")}</p>
+ <p class="price">৳${money(p.price)}</p>
+ <p class="muted">স্টক: ${money(p.stock)}</p>
+ <button onclick="addToCart(${Number(p.id)})" ${Number(p.stock)<=0?"disabled":""}>কার্টে যোগ করুন</button>
+ </article>`).join(""):"কোনো পণ্য পাওয়া যায়নি।";
 }
 
-function addCart(i){
- cart.push(products[i]);
- showCart();
- alert("পণ্যটি কার্টে যোগ হয়েছে!");
+function addToCart(id){
+ const p=products.find(x=>Number(x.id)===id);if(!p)return;
+ const found=cart.find(x=>x.id===id);
+ if(found){if(found.qty>=Number(p.stock)){alert("পর্যাপ্ত স্টক নেই");return}found.qty++}
+ else cart.push({id:p.id,name:p.name,price:Number(p.price),qty:1,stock:Number(p.stock)});
+ renderCart();
+}
+function changeQty(id,delta){
+ const item=cart.find(x=>Number(x.id)===id);if(!item)return;
+ const next=item.qty+delta;
+ if(next<1){cart=cart.filter(x=>Number(x.id)!==id)}
+ else if(next<=item.stock)item.qty=next;
+ else alert("পর্যাপ্ত স্টক নেই");
+ renderCart();
+}
+function renderCart(){
+ const box=document.getElementById("cartItems");
+ if(!cart.length)box.textContent="আপনার কার্ট খালি।";
+ else box.innerHTML=cart.map(x=>`<div class="cart-item"><b>${safe(x.name)}</b> — ৳${money(x.price)} × ${x.qty}
+ <button class="secondary" onclick="changeQty(${Number(x.id)},-1)">−</button>
+ <button onclick="changeQty(${Number(x.id)},1)">+</button></div>`).join("");
+ document.getElementById("cartTotal").textContent=money(cart.reduce((s,x)=>s+x.price*x.qty,0));
 }
 
-function removeCart(i){
- cart.splice(i,1);
- showCart();
+async function placeOrder(){
+ const msg=document.getElementById("orderMessage");
+ const name=document.getElementById("customerName").value.trim();
+ const phone=document.getElementById("customerPhone").value.trim();
+ const address=document.getElementById("customerAddress").value.trim();
+ if(!cart.length){msg.textContent="প্রথমে কার্টে পণ্য যোগ করুন।";return}
+ if(!name||!phone||!address){msg.textContent="সব তথ্য পূরণ করুন।";return}
+ if(!/^01[3-9]\d{8}$/.test(phone)){msg.textContent="সঠিক বাংলাদেশি মোবাইল নম্বর লিখুন।";return}
+ const total=cart.reduce((s,x)=>s+x.price*x.qty,0);
+ const items=cart.map(x=>({id:x.id,name:x.name,price:x.price,quantity:x.qty}));
+ msg.textContent="অর্ডার পাঠানো হচ্ছে...";
+ const {data,error}=await db.from("orders").insert({
+ customer_name:name,phone,address,items,total,
+ payment_method:"Cash on Delivery",status:"Pending"
+ }).select("id,order_code").single();
+ if(error){msg.textContent="অর্ডার করা যায়নি: "+error.message;return}
+ cart=[];renderCart();
+ document.getElementById("customerName").value="";
+ document.getElementById("customerPhone").value="";
+ document.getElementById("customerAddress").value="";
+ msg.textContent="আপনার অর্ডার সফল হয়েছে! অর্ডার নম্বর: "+(data.order_code||data.id);
 }
 
-function showCart(){
- let html="";
- let total=0;
- cart.forEach((p,i)=>{
-  total+=p.price;
-  html+=`<div class="cart-item">
-   <span>${p.name} - ৳${p.price}</span>
-   <button onclick="removeCart(${i})">❌</button>
-  </div>`;
- });
- document.getElementById("cartItems").innerHTML=html||"আপনার কার্ট এখন খালি।";
- document.getElementById("total").innerText=total;
+async function adminLogin(){
+ const email=document.getElementById("adminEmail").value.trim();
+ const password=document.getElementById("adminPassword").value;
+ const msg=document.getElementById("loginMessage");
+ if(email.toLowerCase()!==ADMIN_EMAIL.toLowerCase()){msg.textContent="এই ইমেইল অ্যাডমিন হিসেবে অনুমোদিত নয়।";return}
+ msg.textContent="লগইন হচ্ছে...";
+ const {error}=await db.auth.signInWithPassword({email,password});
+ if(error){msg.textContent="লগইন ব্যর্থ: "+error.message;return}
+ await checkAdmin();
 }
-
-function contactUs(){
- const msg="আসসালামু আলাইকুম, আরিশা অনলাইন শপ সম্পর্কে জানতে চাই।";
- window.open("https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(msg),"_blank");
-}
-
-function orderNow(){
- const name=document.getElementById("customer").value.trim();
- const phone=document.getElementById("phone").value.trim();
- const address=document.getElementById("address").value.trim();
-
- if(!name||!phone||!address){
-  alert("অনুগ্রহ করে নাম, মোবাইল নম্বর ও ঠিকানা পূরণ করুন।");
-  return;
+async function checkAdmin(){
+ const {data:{user}}=await db.auth.getUser();
+ if(!user||user.email?.toLowerCase()!==ADMIN_EMAIL.toLowerCase()){
+ isAdmin=false;document.getElementById("dashboard").classList.add("hidden");return;
  }
- if(cart.length===0){
-  alert("প্রথমে কার্টে পণ্য যোগ করুন।");
-  return;
- }
-
- const items=cart.map(p=>p.name+" - ৳"+p.price).join("\n");
- const total=cart.reduce((s,p)=>s+p.price,0);
-
- const msg=
- "🌸 নতুন অর্ডার - আরিশা অনলাইন শপ\n\n"+
- "নাম: "+name+"\n"+
- "মোবাইল: "+phone+"\n"+
- "ঠিকানা: "+address+"\n\n"+
- "পণ্যসমূহ:\n"+items+"\n\n"+
- "মোট মূল্য: ৳"+total+"\n"+
- "পেমেন্ট: ক্যাশ অন ডেলিভারি";
-
- window.open("https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(msg),"_blank");
+ const {data,error}=await db.from("admin_users").select("user_id").eq("user_id",user.id).maybeSingle();
+ if(error||!data){await db.auth.signOut();document.getElementById("loginMessage").textContent="এই অ্যাকাউন্টের অ্যাডমিন অনুমতি নেই।";return}
+ isAdmin=true;
+ document.getElementById("loginPanel").classList.add("hidden");
+ document.getElementById("dashboard").classList.remove("hidden");
+ await loadDashboard();
+}
+async function adminLogout(){
+ await db.auth.signOut();isAdmin=false;
+ document.getElementById("dashboard").classList.add("hidden");
+ document.getElementById("loginPanel").classList.remove("hidden");
+ document.getElementById("adminPassword").value="";
+}
+async function loadDashboard(){
+ if(!isAdmin)return;
+ const {data,error}=await db.from("orders").select("*").order("created_at",{ascending:false});
+ if(error){alert("অর্ডার লোড হয়নি: "+error.message);return}
+ const orders=data||[];
+ document.getElementById("orderCount").textContent=orders.length;
+ document.getElementById("salesTotal").textContent=money(orders.filter(o=>o.status!=="Cancelled").reduce((s,o)=>s+Number(o.total||0),0));
+ document.getElementById("ordersTable").innerHTML=orders.map(o=>`
+ <tr><td>${safe(o.order_code||o.id)}<br><span class="muted">${safe(o.created_at||"")}</span></td>
+ <td>${safe(o.customer_name)}<br>${safe(o.phone)}<br>${safe(o.address)}</td>
+ <td>${(Array.isArray(o.items)?o.items:[]).map(i=>safe(i.name)+" × "+Number(i.quantity||i.qty||1)).join("<br>")}</td>
+ <td>৳${money(o.total)}</td>
+ <td><select id="status-${Number(o.id)}">
+ ${["Pending","Confirmed","Processing","Shipped","Delivered","Cancelled"].map(s=>`<option value="${s}" ${o.status===s?"selected":""}>${s}</option>`).join("")}
+ </select><button onclick="updateOrder(${Number(o.id)})">আপডেট</button></td></tr>`).join("");
+ await loadProducts();
+}
+async function updateOrder(id){
+ const status=document.getElementById("status-"+id).value;
+ const {error}=await db.from("orders").update({status}).eq("id",id);
+ if(error){alert("স্ট্যাটাস পরিবর্তন হয়নি: "+error.message);return}
+ alert("অর্ডারের স্ট্যাটাস আপডেট হয়েছে।");await loadDashboard();
+}
+function clearProductForm(){
+ ["editProductId","pName","pDescription","pPrice","pStock","pImage"].forEach(id=>document.getElementById(id).value="");
+ document.getElementById("pCategory").value="ফ্যাশন";
+}
+async function saveProduct(){
+ if(!isAdmin)return;
+ const id=document.getElementById("editProductId").value;
+ const name=document.getElementById("pName").value.trim();
+ const description=document.getElementById("pDescription").value.trim();
+ const price=Number(document.getElementById("pPrice").value);
+ const stock=Number(document.getElementById("pStock").value);
+ const image_url=document.getElementById("pImage").value.trim();
+ const category=document.getElementById("pCategory").value;
+ const msg=document.getElementById("productMessage");
+ if(!name||!Number.isFinite(price)||price<0||!Number.isInteger(stock)||stock<0){msg.textContent="সঠিক নাম, দাম ও স্টক দিন।";return}
+ if(image_url&&!/^https:\/\//i.test(image_url)){msg.textContent="ছবির লিংক https:// দিয়ে শুরু হতে হবে।";return}
+ const payload={name,description,price,stock,image_url,category};
+ const result=id?await db.from("products").update(payload).eq("id",id):await db.from("products").insert(payload);
+ if(result.error){msg.textContent="সংরক্ষণ হয়নি: "+result.error.message;return}
+ msg.textContent="পণ্য সংরক্ষণ হয়েছে।";clearProductForm();await loadProducts();
+}
+function renderAdminProducts(){
+ document.getElementById("adminProducts").innerHTML=products.map(p=>`
+ <tr><td>${safe(p.name)}</td><td>৳${money(p.price)}</td><td>${money(p.stock)}</td>
+ <td><button class="secondary" onclick="editProduct(${Number(p.id)})">এডিট</button>
+ <button class="danger" onclick="deleteProduct(${Number(p.id)})">মুছুন</button></td></tr>`).join("");
+}
+function editProduct(id){
+ const p=products.find(x=>Number(x.id)===id);if(!p)return;
+ document.getElementById("editProductId").value=p.id;
+ document.getElementById("pName").value=p.name||"";
+ document.getElementById("pDescription").value=p.description||"";
+ document.getElementById("pPrice").value=p.price;
+ document.getElementById("pStock").value=p.stock;
+ document.getElementById("pImage").value=p.image_url||"";
+ document.getElementById("pCategory").value=p.category||"অন্যান্য";
+ document.getElementById("productMessage").textContent="এখন পণ্যটি সম্পাদনা করুন।";
+ document.getElementById("pName").scrollIntoView({behavior:"smooth"});
+}
+async function deleteProduct(id){
+ if(!isAdmin||!confirm("এই পণ্যটি মুছে ফেলতে চান?"))return;
+ const {error}=await db.from("products").delete().eq("id",id);
+ if(error){alert("মুছতে সমস্যা: "+error.message);return}
+ await loadProducts();
 }
 
-showProducts();
-showCart();
+db.auth.onAuthStateChange((_event,session)=>{
+ if(session?.user)setTimeout(checkAdmin,0);
+});
+loadProducts();
+renderCart();
 </script>
 </body>
-</html>
+ </html>
+ 
